@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">鹰眼保护</string>
+    <string name="switch_protect">是否开启保护</string>
+    <string name="youtube_description">Youtube</string>
+    <string name="front_page_title">首页</string>
+    <string name="adjust_page_title">设置</string>
+    <string name="user_page_title">用户</string>
+    <string name="user_avatar">用户头像</string>
+    <string name="user_name">用户名</string>
+    <string name="user_email">user@163.com</string>
+    <string name="user_phone_number">+12345678</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
