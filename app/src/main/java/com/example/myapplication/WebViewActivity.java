@@ -6,16 +6,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -28,26 +25,27 @@ public class WebViewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         WebView myWebView = findViewById(R.id.webview);
         WebSettings webSettings = myWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true); // 启用 JavaScript
         myWebView.setWebViewClient(new WebViewClient());
 
+        // 添加 JavaScript 接口
         myWebView.addJavascriptInterface(new JavaScriptInterface(), "Android");
 
-        myWebView.loadUrl("https://www.bilibili.com/");
+        // 加载网页
+        myWebView.loadUrl("https://m.bilibili.com/");
 
         String jsCode = "javascript:(function() {" +
                 "    function hideCards() {" +
-                "        var videoCards = document.querySelectorAll('a.v-card');" +
+                "        var videoCards = document.querySelectorAll('div.v-card');" +
                 "        Android.logMessage('Found ' + videoCards.length + ' video cards');" +
                 "        for (var i = 0; i < videoCards.length; i++) {" +
                 "            var card = videoCards[i];" +
                 "            var titleElement = card.querySelector('p.v-card__title');" +
                 "            var title = titleElement ? titleElement.textContent.trim() : '';" +
                 "            Android.logMessage('Card ' + i + ': ' + title);" +
-                "            if (title.toLowerCase().indexOf('1') !== -1) {" +
+                "            if (title.toLowerCase().indexOf('66') !== -1) {" +
                 "                Android.logMessage('Hiding card with title: ' + title);" +
                 "                card.style.display = 'none';" +
                 "                titleElement.textContent = '';" +
@@ -65,11 +63,11 @@ public class WebViewActivity extends AppCompatActivity {
                 "    observer.observe(document.body, { childList: true, subtree: true });" +
                 "})();";
 
-// 等待页面加载完成后执行JavaScript代码
+        // 等待页面加载完成后执行 JavaScript 代码
         myWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                // 创建一个Handler来引入延迟
+                // 创建一个 Handler 来引入延迟
                 new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -84,7 +82,7 @@ public class WebViewActivity extends AppCompatActivity {
 
                         }
                     }
-                }, 1000); // 延迟1秒（1000毫秒），根据需要调整时间
+                }, 2000); // 延迟 2 秒（2000 毫秒），根据需要调整时间
             }
         });
     }
@@ -93,8 +91,7 @@ public class WebViewActivity extends AppCompatActivity {
     public class JavaScriptInterface {
         @JavascriptInterface
         public void logMessage(String message) {
-            Log.d(TAG, message);
+            Log.d(TAG, "JS Log: " + message); // 将 JavaScript 日志输出到 Android Logcat
         }
     }
 }
-
