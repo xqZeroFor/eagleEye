@@ -15,6 +15,8 @@ import java.util.List;
 
 public class ChatCompletionService extends Service {
 
+    public static final String ACTION_RESPONSE = "com.example.ACTION_RESPONSE";
+    public static final String EXTRA_RESPONSE = "response";
     private static final String TAG = "ChatCompletionService";
 
     @Override
@@ -50,23 +52,21 @@ public class ChatCompletionService extends Service {
                 .messages(chatMessages) // 设置消息列表
                 .build();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    arkService.createChatCompletion(chatCompletionRequest)
-                            .getChoices()
-                            .forEach(choice -> {
-                                String response = (String) choice.getMessage().getContent();
-                                Log.d(TAG, "Response: " + response);
-                                // 在这里处理响应，例如发送广播或更新UI
-                            });
-                } catch (Exception e) {
-                    Log.e(TAG, "请求失败: " + e.getMessage());
-                } finally {
-                    // 关闭服务执行器
-                    arkService.shutdownExecutor();
-                }
+        new Thread(() -> {
+            try {
+                arkService.createChatCompletion(chatCompletionRequest)
+                        .getChoices()
+                        .forEach(choice -> {
+                            String response = (String) choice.getMessage().getContent();
+                            // 发送广播
+                            Intent broadcastIntent = new Intent(ACTION_RESPONSE);
+                            broadcastIntent.putExtra(EXTRA_RESPONSE, response);
+                            sendBroadcast(broadcastIntent);
+                        });
+            } catch (Exception e) {
+                Log.e(TAG, "请求失败: " + e.getMessage());
+            } finally {
+                arkService.shutdownExecutor();
             }
         }).start();
 
