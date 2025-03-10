@@ -82,7 +82,7 @@ public class WebViewActivity extends AppCompatActivity {
                 "       const title = titleElement?.textContent.trim() || '';" +
                 "       Android.requestModelJudgment(title, index);" +
                 "       card.dataset.pending = 'true';" +
-                "       card.style.opacity = '0.5';" +
+                "       card.style.opacity = '1';" +
                 "   }" +
                 "   function checkNewCards() {" +
                 "       const cards = document.querySelectorAll('div.v-card:not([data-processed])');" +
