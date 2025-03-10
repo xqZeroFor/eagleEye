@@ -41,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     // 根据消息类型返回对应的 ViewType
     @Override
     public int getItemViewType(int position) {
-        return messageList.get(position).getSenderType();
+        return messageList.get(position).getType();
     }
 
     // 创建不同类型的 ViewHolder

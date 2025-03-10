@@ -165,7 +165,7 @@ public class WebViewActivity extends AppCompatActivity {
         private String buildPrompt(String title) {
             return "请判断该标题的视频是否需要过滤（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n" +
-                    "规则：包含低俗、敏感或违规内容";
+                    "规则：包含低俗、敏感或违规内容，或与游戏相关";
         }
     }
 }
