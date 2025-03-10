@@ -28,6 +28,10 @@ public class ChatCompletionService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 从Intent中获取用户输入
         String userInput = intent.getStringExtra("user_input");
+        int requestId = intent.getIntExtra("request_id", -1);
+
+        // 记录日志：接收到用户输入
+        Log.d(TAG, "Received user input (Request ID: " + requestId + "): " + userInput);
 
         // 创建ArkService实例
         ArkService arkService = ArkService.builder()
@@ -46,6 +50,9 @@ public class ChatCompletionService extends Service {
         // 将用户消息添加到消息列表
         chatMessages.add(userMessage);
 
+        // 记录日志：发送给大模型的请求内容
+        Log.d(TAG, "Sending request to model (Request ID: " + requestId + "): " + userInput);
+
         // 创建聊天完成请求
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
                 .model("ep-20250217155941-2p855") // 替换为你的推理接入点ID
@@ -58,14 +65,28 @@ public class ChatCompletionService extends Service {
                         .getChoices()
                         .forEach(choice -> {
                             String response = (String) choice.getMessage().getContent();
+
+                            // 记录日志：接收到大模型的回复
+                            Log.d(TAG, "Received model response (Request ID: " + requestId + "): " + response);
+
                             // 发送广播
                             Intent broadcastIntent = new Intent(ACTION_RESPONSE);
                             broadcastIntent.putExtra(EXTRA_RESPONSE, response);
+                            broadcastIntent.putExtra("request_id", requestId);
                             sendBroadcast(broadcastIntent);
                         });
             } catch (Exception e) {
-                Log.e(TAG, "请求失败: " + e.getMessage());
+                // 记录日志：请求失败
+                Log.e(TAG, "Request failed (Request ID: " + requestId + "): " + e.getMessage(), e);
+
+                // 发送错误广播
+                Intent errorIntent = new Intent(ACTION_RESPONSE);
+                errorIntent.putExtra("is_error", true);
+                errorIntent.putExtra("request_id", requestId);
+                sendBroadcast(errorIntent);
             } finally {
+                // 记录日志：关闭服务执行器
+                Log.d(TAG, "Shutting down executor for request ID: " + requestId);
                 arkService.shutdownExecutor();
             }
         }).start();
