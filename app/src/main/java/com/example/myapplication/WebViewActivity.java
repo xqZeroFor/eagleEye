@@ -134,7 +134,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public class JavaScriptInterface {
-        private final String[] localKeywords = {"中国", "违规", "样例"};
+        private final String[] localKeywords = {"中国", "原神", "样例"};
 
         @JavascriptInterface
         public void logMessage(String message) {
@@ -165,7 +165,7 @@ public class WebViewActivity extends AppCompatActivity {
         private String buildPrompt(String title) {
             return "请判断该标题的视频是否需要过滤（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n" +
-                    "规则：包含低俗、敏感或违规内容，或与游戏相关";
+                    "规则：包含低俗、敏感或违规内容，或与游戏相关，或包含原神的内容";
         }
     }
 }

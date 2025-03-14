@@ -63,9 +63,11 @@ public class ChatActivity extends AppCompatActivity {
 
     // 发送消息
     private void sendMessage(String content) {
-        // 添加用户消息到列表
-        Message userMessage = new Message(content, Message.TYPE_USER);
-        messageList.add(userMessage);
+        // 添加用户消息
+        messageList.add(new Message(content, Message.TYPE_USER));
+
+        // 添加加载状态
+        messageList.add(new Message("", Message.TYPE_LOADING));
         messageAdapter.notifyItemInserted(messageList.size() - 1);
         recyclerView.scrollToPosition(messageList.size() - 1);
 

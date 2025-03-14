@@ -12,12 +12,15 @@ import com.volcengine.ark.runtime.service.ArkService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChatCompletionService extends Service {
 
     public static final String ACTION_RESPONSE = "com.example.ACTION_RESPONSE";
     public static final String EXTRA_RESPONSE = "response";
     private static final String TAG = "ChatCompletionService";
+
+    private static final AtomicInteger requestIdCounter = new AtomicInteger(0);
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -26,9 +29,12 @@ public class ChatCompletionService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 从Intent中获取用户输入
+        // 生成唯一的 requestId
+        int requestId = requestIdCounter.getAndIncrement();
+        //int cardId = intent.getIntExtra("card_index", -1); // 获取卡片索引
+
+        // 从 Intent 中获取用户输入
         String userInput = intent.getStringExtra("user_input");
-        int requestId = intent.getIntExtra("request_id", -1);
 
         // 记录日志：接收到用户输入
         Log.d(TAG, "Received user input (Request ID: " + requestId + "): " + userInput);
