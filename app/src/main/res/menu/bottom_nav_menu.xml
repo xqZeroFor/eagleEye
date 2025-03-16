@@ -4,6 +4,8 @@
         android:id="@+id/navigation_icon1"
         android:icon="@drawable/front_page_icon"
         android:title="@string/front_page_title" />
+
+    <!--
     <item
         android:id="@+id/navigation_icon2"
         android:icon="@drawable/adjust_icon"
@@ -12,5 +14,6 @@
         android:id="@+id/navigation_icon3"
         android:icon="@drawable/user_icon"
         android:title="@string/user_page_title" />
+    -->
 
 </menu>

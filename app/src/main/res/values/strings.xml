@@ -8,6 +8,8 @@
     <string name="user_avatar">用户头像</string>
     <string name="user_name">用户名</string>
     <string name="user_email">user@163.com</string>
+    <string name="navigation_drawer_open">打开导航抽屉</string>
+    <string name="navigation_drawer_close">关闭导航抽屉</string>
     <string name="user_phone_number">+12345678</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
