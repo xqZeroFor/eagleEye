@@ -87,19 +87,23 @@ public class WebViewActivity extends AppCompatActivity {
                 "       card.style.opacity = '1';" +
                 "   }" +
                 "   function checkNewCards() {" +
-                "       const cards = document.querySelectorAll('div.v-card:not([data-processed])');" +
-                "       cards.forEach((card, index) => {" +
-                "           card.dataset.processed = 'true';" +
-                "           processCard(card, index);" +
+                "       const allCards = Array.from(document.querySelectorAll('div.v-card'));" +
+                "       allCards.forEach((card, index) => {" +
+                "           if (!card.dataset.processed) {" +
+                "               card.dataset.processed = 'true';" +
+                "               processCard(card, index);" + // 使用全局索引
+                "           }" +
                 "       });" +
                 "   }" +
                 "   window.hideCard = function(index) {" +
-                "       const card = document.querySelector(`div.v-card:nth-of-type(${index + 1})`);" +
-                "       if (card) card.style.display = 'none';" +
+                "       const allCards = document.querySelectorAll('div.v-card');" +
+                "       if (index < allCards.length) {" +
+                "           allCards[index].style.display = 'none';" +
+                "       }" +
                 "   };" +
                 "   const observer = new MutationObserver(checkNewCards);" +
                 "   observer.observe(document.body, { childList: true, subtree: true });" +
-                "   checkNewCards();" + // 初始检查
+                "   checkNewCards();" + // 初始处理
                 "})();";
 
         myWebView.evaluateJavascript(jsCode, null);
@@ -117,7 +121,7 @@ public class WebViewActivity extends AppCompatActivity {
                 myWebView.evaluateJavascript(
                         "var card=document.querySelector('div.v-card:nth-of-type(" +
                                 (cardIndex + 1) + ")');" +
-                                "if(card){card.style.opacity='0.5';delete card.dataset.pending;}",
+                                "if(card){card.style.opacity='0.7';delete card.dataset.pending;}",
                         null
                 );
             }
@@ -161,7 +165,7 @@ public class WebViewActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "请判断该标题的视频是否含有火柴人（仅返回YES/NO）：\n" +
+            return "请判断该标题的视频是否与游戏相关（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n" +
                     "";
         }
