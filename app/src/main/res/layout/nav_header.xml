@@ -22,7 +22,7 @@
         android:id="@+id/nav_header_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="用户名"
+        android:text="@string/user_name"
         android:textColor="#FFFFFF"
         android:textSize="18sp"/>
 
@@ -31,7 +31,16 @@
         android:id="@+id/nav_header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="user@example.com"
+        android:text="@string/user_email"
+        android:textColor="#E0E0E0"
+        android:textSize="14sp"/>
+
+    <!-- 用户电话 -->
+    <TextView
+        android:id="@+id/nav_header_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/user_phone_number"
         android:textColor="#E0E0E0"
         android:textSize="14sp"/>
 

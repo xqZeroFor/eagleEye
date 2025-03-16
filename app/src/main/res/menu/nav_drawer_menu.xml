@@ -2,22 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_product"
-            android:title="用户名"/>
-        <item
-            android:id="@+id/nav_mail"
-            android:title="email"/>
-        <item
-            android:id="@+id/nav_phone"
-            android:title="电话"/>
+            android:id="@+id/nav_front_page"
+            android:title="首页"/>
         <item
             android:id="@+id/nav_account"
             android:title="编辑账户"/>
         <item
             android:id="@+id/nav_keywords"
-            android:title="添加关键词"/>
+            android:title="编辑关键词"/>
         <item
-            android:id="@+id/nav_buy"
+            android:id="@+id/nav_history"
+            android:title="过滤历史"/>
+        <item
+            android:id="@+id/nav_logout"
             android:title="登出"/>
     </group>
 </menu>

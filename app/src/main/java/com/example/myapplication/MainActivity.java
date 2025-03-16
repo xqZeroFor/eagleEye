@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MainFrontPageFragment())
                     .commit();
-            navigationView.setCheckedItem(R.id.nav_product);
+            navigationView.setCheckedItem(R.id.nav_account);
         }
     }
 
@@ -61,12 +61,17 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
 
-        if (itemId == R.id.nav_product) {
-            selectedFragment = new MainFrontPageFragment();
-        } else if (itemId == R.id.nav_keywords) {
-            selectedFragment = new MainAdjustPageFragment(); // 假设这是原第二个页面
+        if(itemId == R.id.nav_front_page) {
+            selectedFragment = new MainFrontPageFragment(); //主页
         } else if (itemId == R.id.nav_account) {
-            selectedFragment = new MainUserPageFragment(); // 假设这是原第三个页面
+            selectedFragment = new MainUserPageFragment(); // 编辑账户
+        } else if (itemId == R.id.nav_history) {
+            selectedFragment = new MainFrontPageFragment(); // 之后补充历史记录页面
+        }
+        else if (itemId == R.id.nav_keywords) {
+            selectedFragment = new MainAdjustPageFragment(); // 编辑关键词
+        } else if (itemId == R.id.nav_logout) {
+            selectedFragment = new MainUserPageFragment(); // 之后补充登出页面
         }
 
         if (selectedFragment != null) {
