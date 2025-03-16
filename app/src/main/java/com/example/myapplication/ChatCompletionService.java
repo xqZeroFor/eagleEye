@@ -29,15 +29,13 @@ public class ChatCompletionService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 生成唯一的 requestId
-        int requestId = requestIdCounter.getAndIncrement();
-        //int cardId = intent.getIntExtra("card_index", -1); // 获取卡片索引
+        int cardIndex = intent.getIntExtra("card_index", -1); // 获取卡片索引
 
         // 从 Intent 中获取用户输入
         String userInput = intent.getStringExtra("user_input");
 
         // 记录日志：接收到用户输入
-        Log.d(TAG, "Received user input (Request ID: " + requestId + "): " + userInput);
+        Log.d(TAG, "Received user input (card_index: " + cardIndex + "): " + userInput);
 
         // 创建ArkService实例
         ArkService arkService = ArkService.builder()
@@ -57,7 +55,7 @@ public class ChatCompletionService extends Service {
         chatMessages.add(userMessage);
 
         // 记录日志：发送给大模型的请求内容
-        Log.d(TAG, "Sending request to model (Request ID: " + requestId + "): " + userInput);
+        Log.d(TAG, "Sending request to model (cardIndex: " + cardIndex + "): " + userInput);
 
         // 创建聊天完成请求
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
@@ -73,26 +71,26 @@ public class ChatCompletionService extends Service {
                             String response = (String) choice.getMessage().getContent();
 
                             // 记录日志：接收到大模型的回复
-                            Log.d(TAG, "Received model response (Request ID: " + requestId + "): " + response);
+                            Log.d(TAG, "Received model response (card index: " + cardIndex + "): " + response);
 
                             // 发送广播
                             Intent broadcastIntent = new Intent(ACTION_RESPONSE);
                             broadcastIntent.putExtra(EXTRA_RESPONSE, response);
-                            broadcastIntent.putExtra("request_id", requestId);
+                            broadcastIntent.putExtra("card_index",cardIndex);
                             sendBroadcast(broadcastIntent);
                         });
             } catch (Exception e) {
                 // 记录日志：请求失败
-                Log.e(TAG, "Request failed (Request ID: " + requestId + "): " + e.getMessage(), e);
+                Log.e(TAG, "Request failed (card index: " + cardIndex + "): " + e.getMessage(), e);
 
                 // 发送错误广播
                 Intent errorIntent = new Intent(ACTION_RESPONSE);
                 errorIntent.putExtra("is_error", true);
-                errorIntent.putExtra("request_id", requestId);
+                errorIntent.putExtra("card_index", cardIndex);
                 sendBroadcast(errorIntent);
             } finally {
                 // 记录日志：关闭服务执行器
-                Log.d(TAG, "Shutting down executor for request ID: " + requestId);
+                Log.d(TAG, "Shutting down executor for card index: " + cardIndex);
                 arkService.shutdownExecutor();
             }
         }).start();

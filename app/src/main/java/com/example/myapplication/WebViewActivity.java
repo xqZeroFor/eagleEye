@@ -27,9 +27,11 @@ public class WebViewActivity extends AppCompatActivity {
     private final BroadcastReceiver apiReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (ChatCompletionService.ACTION_RESPONSE.equals(intent.getAction())) {
+            if (true) {
+                Log.d(TAG, "------------------- Broadcast received -------------------");
                 String response = intent.getStringExtra(ChatCompletionService.EXTRA_RESPONSE);
                 int cardIndex = intent.getIntExtra("card_index", -1);
+                Log.d(TAG, "card index: "+ cardIndex +"will be hide: " + response);
                 handleModelResponse(response, cardIndex);
             }
         }
@@ -50,7 +52,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         // 注册广播接收器
         registerReceiver(apiReceiver,
-                new IntentFilter(ChatCompletionService.ACTION_RESPONSE), Context.RECEIVER_NOT_EXPORTED);
+                new IntentFilter("com.example.ACTION_RESPONSE"), Context.RECEIVER_EXPORTED);
     }
 
     private void setupWebView() {
@@ -106,7 +108,7 @@ public class WebViewActivity extends AppCompatActivity {
     private void handleModelResponse(String response, int cardIndex) {
         boolean shouldHide = parseModelResponse(response);
         responseHandler.post(() -> {
-            if (shouldHide && cardIndex != -1) {
+            if (shouldHide) {
                 myWebView.evaluateJavascript(
                         "hideCard(" + cardIndex + ")", null
                 );
@@ -115,7 +117,7 @@ public class WebViewActivity extends AppCompatActivity {
                 myWebView.evaluateJavascript(
                         "var card=document.querySelector('div.v-card:nth-of-type(" +
                                 (cardIndex + 1) + ")');" +
-                                "if(card){card.style.opacity='1';delete card.dataset.pending;}",
+                                "if(card){card.style.opacity='0.5';delete card.dataset.pending;}",
                         null
                 );
             }
@@ -124,7 +126,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     private boolean parseModelResponse(String response) {
         // 实际使用时需要根据API返回格式解析
-        return response != null && response.contains("YES");
+        return  response.contains("YES");
     }
 
     @Override
@@ -134,7 +136,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public class JavaScriptInterface {
-        private final String[] localKeywords = {"中国", "原神", "样例"};
+        private final String[] localKeywords = {"", "测试", "样例"};
 
         @JavascriptInterface
         public void logMessage(String message) {
@@ -143,10 +145,6 @@ public class WebViewActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void requestModelJudgment(String title, int index) {
-            if (preCheck(title)) {
-                handleModelResponse("YES", index);
-                return;
-            }
 
             Intent serviceIntent = new Intent(WebViewActivity.this,
                     ChatCompletionService.class);
@@ -163,9 +161,9 @@ public class WebViewActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "请判断该标题的视频是否需要过滤（仅返回YES/NO）：\n" +
+            return "请判断该标题的视频是否含有火柴人（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n" +
-                    "规则：包含低俗、敏感或违规内容，或与游戏相关，或包含原神的内容";
+                    "";
         }
     }
 }
