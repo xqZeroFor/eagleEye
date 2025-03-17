@@ -56,7 +56,7 @@ public class MainFrontPageFragment extends Fragment {
             }
         });
 
-        ImageButton openWebViewButton = view.findViewById(R.id.openYoutubeButton);
+        ImageButton openWebViewButton = view.findViewById(R.id.openBaiduButton);
         openWebViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

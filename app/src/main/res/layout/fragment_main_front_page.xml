@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2c8aad"
+        android:background="#BA7DF7"
         android:padding="7dp"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
@@ -98,11 +98,11 @@
         android:layout_marginEnd="18dp">
 
         <ImageButton
-            android:id="@+id/openYoutubeButton"
+            android:id="@+id/openBaiduButton"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:src="@drawable/youtube_logo"
+            android:src="@drawable/baidu_logo"
             android:contentDescription="@string/youtube_description"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"/>
