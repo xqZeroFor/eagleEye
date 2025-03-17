@@ -129,7 +129,6 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private boolean parseModelResponse(String response) {
-        // 实际使用时需要根据API返回格式解析
         return  response.contains("YES");
     }
 
@@ -173,8 +172,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         private String buildPrompt(String title) {
             return "请判断该标题的视频是否与游戏相关（仅返回YES/NO）：\n" +
-                    "标题：" + title + "\n" +
-                    "";
+                    "标题：" + title + "\n";
         }
     }
 }
