@@ -140,7 +140,7 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     public class JavaScriptInterface {
-        private final String[] localKeywords = {"", "测试", "样例"};
+        private final String[] localKeywords = {"番", "测试", "样例"};
 
         @JavascriptInterface
         public void logMessage(String message) {
@@ -149,6 +149,13 @@ public class WebViewActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void requestModelJudgment(String title, int index) {
+            if(preCheck(title)) {
+                responseHandler.post(() -> {
+                    myWebView.evaluateJavascript("hideCard(" + index + ")", null);
+                    Log.d(TAG, "本地过滤" + index + title);
+                });
+                return;
+            }
 
             Intent serviceIntent = new Intent(WebViewActivity.this,
                     ChatCompletionService.class);
