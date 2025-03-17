@@ -121,7 +121,7 @@ public class WebViewActivity extends AppCompatActivity {
                 myWebView.evaluateJavascript(
                         "var card=document.querySelector('div.v-card:nth-of-type(" +
                                 (cardIndex + 1) + ")');" +
-                                "if(card){card.style.opacity='0.7';delete card.dataset.pending;}",
+                                "if(card){card.style.opacity='0.75';delete card.dataset.pending;}",
                         null
                 );
             }
