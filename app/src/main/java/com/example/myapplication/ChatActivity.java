@@ -82,11 +82,16 @@ public class ChatActivity extends AppCompatActivity {
 
         // 模拟网络请求的延迟
         new Handler().postDelayed(() -> {
-            String modelResponse = "大模型的回复：" + userInput; // 替换为实际的模型回复
+            String modelResponse = "没问题，希望下面这些笑话能逗你开怀：\n" +
+                    "1. 许仙给老婆买了一顶帽子，白娘子戴上之后就死了，因为那是顶鸭（压）舌（蛇）帽。\n" +
+                    "2. 海绵宝宝被蟹老板开除了，海绵宝宝含着眼泪说：“蟹老板……” 蟹老板：“不用谢！”\n" +
+                    "3. 有一天，麋鹿在森林里迷路了，于是给它的好朋友长颈鹿打电话：“喂？我迷路（麋鹿）啦！” 长颈鹿：“嗯，我长颈鹿啦！”\n" +
+                    "4. 一只北极熊闲得无聊，就开始拔自己的毛。一根，两根，三根…… 最后拔得一根不剩，然后它说了句：“好冷啊！”\n" +
+                    "5. 有一天，小蚂蚁迷路找不到蚁窝，可着急了，恰好看到它的朋友经过，于是冲过去大喊一声：“姐们儿！你…… 你都如何回蚁窝（回忆我）？” 那朋友一愣，然后反问道：“带…… 带…… 带着笑或是很沉默？”\n" + userInput;
             Message modelMessage = new Message(modelResponse, Message.TYPE_MODEL);
             messageList.add(modelMessage);
             messageAdapter.notifyItemInserted(messageList.size() - 1);
             recyclerView.scrollToPosition(messageList.size() - 1);
-        }, 1000);
+        }, 3000);
     }
 }
