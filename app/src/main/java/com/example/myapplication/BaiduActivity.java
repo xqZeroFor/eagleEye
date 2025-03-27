@@ -80,14 +80,14 @@ public class BaiduActivity extends AppCompatActivity {
         String jsCode = "javascript:(function() {" +
                 "   let pendingCards = [];" +
                 "   function processCard(card, index) {" +
-                "       const titleElement = card.querySelector('p.v-card__title');" +
+                "       const titleElement = card.querySelector('div.rn-h2, div.rn-h1');" +
                 "       const title = titleElement?.textContent.trim() || '';" +
                 "       Android.requestModelJudgment(title, index);" +
                 "       card.dataset.pending = 'true';" +
                 "       card.style.opacity = '1';" +
                 "   }" +
                 "   function checkNewCards() {" +
-                "       const allCards = Array.from(document.querySelectorAll('div.v-card'));" +
+                "       const allCards = Array.from(document.querySelectorAll('a.rn-large-tpl, a.rn-tpl, a.rn-tpl1'));" +
                 "       allCards.forEach((card, index) => {" +
                 "           if (!card.dataset.processed) {" +
                 "               card.dataset.processed = 'true';" +
@@ -96,7 +96,7 @@ public class BaiduActivity extends AppCompatActivity {
                 "       });" +
                 "   }" +
                 "   window.hideCard = function(index) {" +
-                "       const allCards = document.querySelectorAll('div.v-card');" +
+                "       const allCards = document.querySelectorAll('a.rn-large-tpl, a.rn-tpl2, a.rn-tpl1');" +
                 "       if (index < allCards.length) {" +
                 "           allCards[index].style.display = 'none';" +
                 "       }" +
@@ -119,9 +119,11 @@ public class BaiduActivity extends AppCompatActivity {
             } else {
                 // 恢复卡片显示
                 myWebView.evaluateJavascript(
-                        "var card=document.querySelector('div.v-card:nth-of-type(" +
-                                (cardIndex + 1) + ")');" +
-                                "if(card){card.style.opacity='0.75';delete card.dataset.pending;}",
+                        "var cards = document.querySelectorAll('a.rn-large-tpl, a.rn-tpl2, a.rn-tpl1');" +
+                                "if (cards[" + cardIndex + "]) {" +
+                                "   cards[" + cardIndex + "].style.opacity = '0.75';" +
+                                "   delete cards[" + cardIndex + "].dataset.pending;" +
+                                "}",
                         null
                 );
             }
@@ -139,7 +141,7 @@ public class BaiduActivity extends AppCompatActivity {
     }
 
     public class JavaScriptInterface {
-        private final String[] localKeywords = {"番", "测试", "样例"};
+        private final String[] localKeywords = {"剧", "测试", "样例"};
 
         @JavascriptInterface
         public void logMessage(String message) {
@@ -171,7 +173,7 @@ public class BaiduActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "请判断该标题的视频是否与游戏相关（仅返回YES/NO）：\n" +
+            return "请判断该标题的视频是否与戏剧有关（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n";
         }
     }
