@@ -56,8 +56,15 @@ public class MainFrontPageFragment extends Fragment {
             }
         });
 
-        ImageButton openWebViewButton = view.findViewById(R.id.openBaiduButton);
-        openWebViewButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton openBiliButton = view.findViewById(R.id.openBiliButton);
+        openBiliButton.setOnClickListener(new View.OnClickListener() {
+            //            @Override
+//            public void onClick(View v) {
+//                String url = "https://www.bilibili.com/";
+//                Intent intent = new Intent(getActivity(), SearchWebActivity.class);
+//                intent.putExtra("url", url);
+//                startActivity(intent);
+//            }
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
@@ -66,13 +73,13 @@ public class MainFrontPageFragment extends Fragment {
             }
         });
 
-        ImageButton openBiliButton = view.findViewById(R.id.openBiliButton);
-        openBiliButton.setOnClickListener(new View.OnClickListener() {
+
+        ImageButton openWebViewButton = view.findViewById(R.id.openBaiduButton);
+        openWebViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://www.bilibili.com/";
-                Intent intent = new Intent(getActivity(), SearchWebActivity.class);
-                intent.putExtra("url", url);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                intent.putExtra("switch_state", isSwitchOnWrapper[0]);
                 startActivity(intent);
             }
         });

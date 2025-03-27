@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
 
+        // 侧边栏点击逻辑
         if(itemId == R.id.nav_front_page) {
             selectedFragment = new MainFrontPageFragment(); //主页
         } else if (itemId == R.id.nav_account) {

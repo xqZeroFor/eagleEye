@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">鹰眼保护</string>
     <string name="switch_protect">是否开启保护</string>
-    <string name="youtube_description">Youtube</string>
+    <string name="bilibili_description">BiliBili</string>
+    <string name="baidu_description">百度</string>
     <string name="front_page_title">首页</string>
     <string name="adjust_page_title">设置</string>
     <string name="user_page_title">用户</string>
