@@ -78,7 +78,7 @@ public class MainFrontPageFragment extends Fragment {
         openWebViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BiliActivity.class);
+                Intent intent = new Intent(getActivity(), BaiduActivity.class);
                 intent.putExtra("switch_state", isSwitchOnWrapper[0]);
                 startActivity(intent);
             }

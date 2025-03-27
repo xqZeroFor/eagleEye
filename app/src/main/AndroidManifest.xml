@@ -29,6 +29,9 @@
             android:name=".BiliActivity"
             android:exported="false" />
         <activity
+            android:name=".BaiduActivity"
+            android:exported="false" />
+        <activity
             android:name=".secondActivity"
             android:exported="false">
             <intent-filter>
