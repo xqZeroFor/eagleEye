@@ -26,7 +26,7 @@
             android:name=".SearchWebActivity"
             android:exported="false" />
         <activity
-            android:name=".WebViewActivity"
+            android:name=".BiliActivity"
             android:exported="false" />
         <activity
             android:name=".secondActivity"

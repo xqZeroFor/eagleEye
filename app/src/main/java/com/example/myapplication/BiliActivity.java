@@ -16,9 +16,9 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class WebViewActivity extends AppCompatActivity {
+public class BiliActivity extends AppCompatActivity {
 
-    private static final String TAG = "WebViewLog";
+    private static final String TAG = "BiliLog";
     private WebView myWebView;
     private boolean isFilterEnabled;
     private final Handler responseHandler = new Handler(Looper.getMainLooper());
@@ -66,7 +66,7 @@ public class WebViewActivity extends AppCompatActivity {
                 if (isFilterEnabled) {
                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
                         injectFilterLogic();
-                        Toast.makeText(WebViewActivity.this,
+                        Toast.makeText(BiliActivity.this,
                                 "智能过滤已启用", Toast.LENGTH_SHORT).show();
                     }, 2000);
                 }
@@ -156,7 +156,7 @@ public class WebViewActivity extends AppCompatActivity {
                 return;
             }
 
-            Intent serviceIntent = new Intent(WebViewActivity.this,
+            Intent serviceIntent = new Intent(BiliActivity.this,
                     ChatCompletionService.class);
             serviceIntent.putExtra("user_input", buildPrompt(title));
             serviceIntent.putExtra("card_index", index);
