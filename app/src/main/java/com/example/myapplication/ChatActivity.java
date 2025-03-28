@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
-// 你好 介绍一下北京邮电大学 空气的成分
     private RecyclerView recyclerView;
     private EditText etMessage;
     private MessageAdapter messageAdapter;
