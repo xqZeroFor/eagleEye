@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.volcengine.ark.runtime.model.completion.chat.ChatCompletionRequest;
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessage;
 import com.volcengine.ark.runtime.model.completion.chat.ChatMessageRole;
@@ -77,7 +79,7 @@ public class ChatCompletionService extends Service {
                             Intent broadcastIntent = new Intent(ACTION_RESPONSE);
                             broadcastIntent.putExtra(EXTRA_RESPONSE, response);
                             broadcastIntent.putExtra("card_index",cardIndex);
-                            sendBroadcast(broadcastIntent);
+                            LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
                         });
             } catch (Exception e) {
                 // 记录日志：请求失败
@@ -87,7 +89,7 @@ public class ChatCompletionService extends Service {
                 Intent errorIntent = new Intent(ACTION_RESPONSE);
                 errorIntent.putExtra("is_error", true);
                 errorIntent.putExtra("card_index", cardIndex);
-                sendBroadcast(errorIntent);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(errorIntent);
             } finally {
                 // 记录日志：关闭服务执行器
                 Log.d(TAG, "Shutting down executor for card index: " + cardIndex);

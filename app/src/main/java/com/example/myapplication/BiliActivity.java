@@ -15,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class BiliActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class BiliActivity extends AppCompatActivity {
     private WebView myWebView;
     private boolean isFilterEnabled;
     private final Handler responseHandler = new Handler(Looper.getMainLooper());
+    private LocalBroadcastManager localBroadcastManager;
 
     // 广播接收器用于接收AI响应
     private final BroadcastReceiver apiReceiver = new BroadcastReceiver() {
@@ -51,8 +53,11 @@ public class BiliActivity extends AppCompatActivity {
         isFilterEnabled = getIntent().getBooleanExtra("switch_state", false);
 
         // 注册广播接收器
-        registerReceiver(apiReceiver,
-                new IntentFilter("com.example.ACTION_RESPONSE"), Context.RECEIVER_EXPORTED);
+        // 初始化LocalBroadcastManager
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        localBroadcastManager.registerReceiver(apiReceiver,
+                new IntentFilter(ChatCompletionService.ACTION_RESPONSE)
+        );
     }
 
     private void setupWebView() {
@@ -135,7 +140,7 @@ public class BiliActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(apiReceiver);
+        localBroadcastManager.unregisterReceiver(apiReceiver);
     }
 
     public class JavaScriptInterface {
