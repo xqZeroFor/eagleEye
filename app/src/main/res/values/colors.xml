@@ -5,4 +5,5 @@
     <color name="primaryTextColor">#212121</color>
     <color name="switchThumbColor">#FF5722</color>
     <color name="switchTrackColor">#BDBDBD</color>
+    <color name="chatBackgroundColor">#F3FCFB</color>
 </resources>

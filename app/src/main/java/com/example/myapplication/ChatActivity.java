@@ -4,11 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -51,7 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         // 初始化组件
         recyclerView = findViewById(R.id.rv_chat);
         etMessage = findViewById(R.id.et_message);
-        Button btnSend = findViewById(R.id.btn_send);
+        ImageButton btnSend = findViewById(R.id.btn_send);
 
         // 设置 RecyclerView
         messageList = new ArrayList<>();
