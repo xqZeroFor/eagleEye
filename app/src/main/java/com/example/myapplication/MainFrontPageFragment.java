@@ -30,20 +30,7 @@ public class MainFrontPageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_front_page, container, false);
 
-        Button sendButton = view.findViewById(R.id.sendButton);
-        EditText userInputEditText;
-        userInputEditText = view.findViewById(R.id.user_input_edit_text);
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userInput = userInputEditText.getText().toString();
 
-                // 创建 Intent 并启动服务
-                Intent intent = new Intent(getActivity(), ChatCompletionService.class);
-                intent.putExtra("user_input", userInput);
-                getActivity().startService(intent);
-            }
-        });
 
         isSwitchOnWrapper[0] = false;
 
@@ -85,7 +72,7 @@ public class MainFrontPageFragment extends Fragment {
         });
 
         EditText urlEditText = view.findViewById(R.id.urlEditText);
-        Button goButton = view.findViewById(R.id.goButton);
+        ImageButton goButton = view.findViewById(R.id.goButton);
 
         goButton.setOnClickListener(new View.OnClickListener() {
             @Override

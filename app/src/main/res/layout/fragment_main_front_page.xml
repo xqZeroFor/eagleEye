@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f3fcfb"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".MainActivity">
 
+
     <!-- 顶部导航栏 -->
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#BA7DF7"
-        android:padding="7dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+
+        >
 
         <androidx.cardview.widget.CardView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginLeft="160dp"
             app:cardCornerRadius="25dp"> <!-- 设置圆角半径 -->
+
+
 
             <ImageButton
                 android:id="@+id/nav_icon"
@@ -29,11 +36,13 @@
                 android:src="@drawable/eagle_icon"
                 android:scaleType="centerCrop"
                 android:background="?attr/selectableItemBackgroundBorderless" />
+
+
         </androidx.cardview.widget.CardView>
-
-
-        <!-- 您可以在这里添加更多的导航栏元素，例如按钮或图标 -->
     </LinearLayout>
+
+
+
 
 
 
@@ -44,77 +53,295 @@
         android:layout_height="wrap_content"
         android:text="Button_1" />-->
 
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="16dp"-->
+<!--        app:cardCornerRadius="20dp"-->
+<!--        app:cardElevation="2dp"-->
+<!--        app:cardBackgroundColor="#F5F5F5">-->
+
+<!--        <androidx.appcompat.widget.SwitchCompat-->
+<!--            android:id="@+id/mySwitch"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:padding="15dp"-->
+<!--            android:text="@string/switch_protect"-->
+<!--            android:textSize="20sp"-->
+<!--            android:textColor="@color/primaryTextColor"-->
+<!--            app:switchMinWidth="56dp"-->
+<!--            app:thumbTint="@color/switchThumbColor"-->
+<!--            app:trackTint="@color/switchTrackColor" />-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginStart="18dp"-->
+<!--        android:layout_marginEnd="18dp">-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/urlEditText"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:hint="请输入网址"-->
+<!--            android:inputType="textUri" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/goButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Go" />-->
+<!--    </LinearLayout>-->
+    <!-- 控制面板 -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="2dp"
-        app:cardBackgroundColor="#F5F5F5">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        android:padding="10dp">
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/mySwitch"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:spacing="16dp">
+
+        <!-- 开关行 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="@string/switch_protect"
-            android:textSize="20sp"
-            android:textColor="@color/primaryTextColor"
-            app:switchMinWidth="56dp"
-            app:thumbTint="@color/switchThumbColor"
-            app:trackTint="@color/switchTrackColor" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:spacing="8dp">
 
-    </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AI智能防护"
+                    android:textColor="#424242"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已拦截 1,326 次违规"
+                    android:textColor="#9E9E9E"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <!-- 自定义开关 -->
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/mySwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                app:trackTint="@drawable/switch_track_selector"
+                app:thumbTint="@drawable/switch_thumb_selector"
+                app:showText="false"
+                app:switchMinWidth="60dp"/>
+
+        </LinearLayout>
+
+        <!-- 输入行 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:spacing="8dp">
+
+            <!-- 输入框 -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="250dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/urlEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="← 输入访问地址"
+                    android:textColorHint="#9E9E9E"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/goButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:src="@drawable/go_icon"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:scaleType="fitCenter"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
+        android:gravity="center"
+        android:background="#f3fcfb"
+        android:layout_marginTop="20dp">
 
-        <EditText
-            android:id="@+id/urlEditText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:layout_width="110dp"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            android:layout_marginRight="20dp"
+            android:padding="0dp">
+<!--         哔哩哔哩卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="请输入网址"
-            android:inputType="textUri" />
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="0dp"
+            android:gravity="center"
+            android:spacing="0dp">
 
-        <Button
-            android:id="@+id/goButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go" />
+            <ImageButton
+                android:id="@+id/openBiliButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/bilibili_description"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bili_icon" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="哔哩哔哩"
+                android:textColor="#424242"
+                android:layout_marginBottom="20dp"
+                android:textSize="16sp"/>
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="110dp"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            android:layout_marginRight="20dp"
+            android:padding="0dp">
+            <!--         百度卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="0dp"
+                android:gravity="center"
+                android:spacing="0dp">
+
+                <ImageButton
+                    android:id="@+id/openBaiduButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/baidu_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/baidu_icon" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="百度"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="110dp"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+
+            android:padding="0dp">
+            <!--         小红书卡片 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="0dp"
+                android:gravity="center"
+                android:spacing="0dp">
+
+                <ImageButton
+                    android:id="@+id/openRedbookButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/xiaohongshu_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/xiaohongshu_icon" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="小红书"
+                    android:textColor="#424242"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
 
-
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp">
 
-        <ImageButton
-            android:id="@+id/openBiliButton"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/bili_logo"
-            android:contentDescription="@string/bilibili_description"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitCenter"/>
-        <ImageButton
-            android:id="@+id/openBaiduButton"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:src="@drawable/baidu_logo"
-            android:contentDescription="@string/baidu_description"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitCenter"/>
+
+
+
     </LinearLayout>
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -122,25 +349,8 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="18dp"
-        android:layout_marginEnd="18dp">
 
-        <EditText
-            android:id="@+id/user_input_edit_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Enter text" />
-        <Button
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go" />
-    </LinearLayout>
 
 
 </LinearLayout>
+

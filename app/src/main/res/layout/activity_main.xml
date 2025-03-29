@@ -19,10 +19,16 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:title="鹰眼AI"
+            app:subtitle="v0.0.1 • 运行中"
+            android:background="#ffffff"
+            app:titleTextColor="#424242"
+            app:subtitleTextColor="#9E9E9E"
+            app:navigationIcon="@drawable/eagle_icon">
+
+            <!-- 自定义布局区域 -->
+
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:id="@+id/fragment_container"

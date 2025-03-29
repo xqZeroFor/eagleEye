@@ -6,4 +6,53 @@
     <color name="switchThumbColor">#FF5722</color>
     <color name="switchTrackColor">#BDBDBD</color>
     <color name="lightGreen">#F3FCFB</color>
+
+    <!-- Material 3 基础色 -->
+    <color name="primary">#6750A4</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#EADDFF</color>
+    <color name="onPrimaryContainer">#21005E</color>
+
+    <color name="secondary">#625B71</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#E8DEF8</color>
+    <color name="onSecondaryContainer">#1D192B</color>
+
+    <!-- 表面色 -->
+    <color name="surface">#FEF7FF</color>
+    <color name="onSurface">#1D1B20</color>
+    <color name="surfaceVariant">#E7E0EC</color>
+    <color name="onSurfaceVariant">#49454F</color>
+
+    <color name="surfaceContainer">#F3EDF7</color>
+    <color name="surfaceContainerHigh">#ECE6F0</color>
+    <color name="surfaceContainerLow">#F7F2FA</color>
+
+    <!-- 轮廓色 -->
+    <color name="outline">#79747E</color>
+    <color name="outlineVariant">#CAC4D0</color>
+
+    <!-- 错误色 -->
+    <color name="error">#B3261E</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="errorContainer">#F9DEDC</color>
+    <color name="onErrorContainer">#410E0B</color>
+
+    <!-- 成功色 -->
+    <color name="success">#4CAF50</color>
+    <color name="onSuccess">#000000</color>
+
+    <!-- 平台品牌色 -->
+    <color name="bilibili_bg">#FE729A</color>  <!-- B站粉 -->
+    <color name="baidu_bg">#2932E1</color>      <!-- 百度蓝 -->
+
+    <!-- 开关组件色 -->
+    <color name="switch_track">#E5E7EB</color>
+    <color name="switch_thumb">#FFFFFF</color>
+    <color name="blue_600">#3B82F6</color>
+    <color name="green_500">#10B981</color>
+    <color name="switch_track_inactive">#E5E7EB</color>
+
+    <!-- 文字色 -->
+    <color name="secondaryTextColor">@color/onSurfaceVariant</color>
 </resources>
