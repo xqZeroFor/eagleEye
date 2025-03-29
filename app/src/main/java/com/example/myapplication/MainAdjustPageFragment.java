@@ -5,9 +5,12 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -20,34 +23,67 @@ import java.util.List;
 
 public class MainAdjustPageFragment extends Fragment {
 
-    private FlexboxLayout flexboxLayout;
-    private boolean isEditMode = false;
-    private List<String> wordList;
+    private LinearLayout keywordContainer; // 关键词容器
+    private TextView counterText; // 计数器
+    private boolean isEditMode = true;
+    private List<String> wordList = new ArrayList<>();
+    private int maxKeywords = 30;
+    private ImageView addButton;
+    private SeekBar seekBar;
+    private TextView levelText;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_adjust_page, container, false);
 
-        flexboxLayout = view.findViewById(R.id.flexboxLayout);
-        wordList = new ArrayList<>();
+        // 初始化视图
+        // 绑定视图
+        keywordContainer = view.findViewById(R.id.keywordContainer);
+        counterText = view.findViewById(R.id.counterText);
+        addButton = view.findViewById(R.id.addButton);
+        seekBar = view.findViewById(R.id.seekBar);
+        levelText = view.findViewById(R.id.levelText);
 
-        view.findViewById(R.id.button_edit).setOnClickListener(v -> toggleEditMode());
-        view.findViewById(R.id.button_add_word).setOnClickListener(v -> showAddWordDialog());
+        // 设置监听器
+        addButton.setOnClickListener(v -> showAddWordDialog());
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // 计算等级（0-100 映射到 0-10）
+                int level = Math.min(progress / 10, 10); // 取整
+                levelText.setText("Lv." + level);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+
+        // 初始化数据
+        initSampleData();
+        updateCounter();
 
         return view;
     }
 
-    private void toggleEditMode() {
-        isEditMode = !isEditMode;
-        for (int i = 0; i < flexboxLayout.getChildCount(); i++) {
-            View wordView = flexboxLayout.getChildAt(i);
-            ImageView deleteButton = wordView.findViewById(R.id.button_delete);
-            deleteButton.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
-        }
+    private void initSampleData() {
+        wordList.clear();
+        wordList.add("暴力内容");
+        wordList.add("色情内容");
+        wordList.add("游戏内容");
+        refreshKeywordViews();
     }
 
     private void showAddWordDialog() {
+        if (wordList.size() >= maxKeywords) {
+            Toast.makeText(getContext(), "已达到最大关键词数量", Toast.LENGTH_SHORT).show();
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Add Word");
 
@@ -68,17 +104,40 @@ public class MainAdjustPageFragment extends Fragment {
 
     private void addWord(String word) {
         wordList.add(word);
-        View wordView = LayoutInflater.from(getContext()).inflate(R.layout.item_word, flexboxLayout, false);
-        TextView textViewWord = wordView.findViewById(R.id.textViewWord);
-        textViewWord.setText(word);
+        addKeywordView(word);
+        updateCounter();
+    }
 
-        ImageView deleteButton = wordView.findViewById(R.id.button_delete);
-        deleteButton.setOnClickListener(v -> {
+    private void refreshKeywordViews() {
+        keywordContainer.removeAllViews();
+        for (String word : wordList) {
+            addKeywordView(word);
+        }
+    }
+
+    private void addKeywordView(String word) {
+        View keywordView = LayoutInflater.from(getContext())
+                .inflate(R.layout.item_keyword, keywordContainer, false);
+
+        TextView textView = keywordView.findViewById(R.id.tv_keyword);
+        ImageView deleteBtn = keywordView.findViewById(R.id.btn_delete);
+
+        textView.setText(word);
+        deleteBtn.setVisibility(isEditMode ? View.VISIBLE : View.GONE);
+
+        deleteBtn.setOnClickListener(v -> {
             wordList.remove(word);
-            flexboxLayout.removeView(wordView);
-            Toast.makeText(getContext(), "Deleted: " + word, Toast.LENGTH_SHORT).show();
+            keywordContainer.removeView(keywordView);
+            updateCounter();
+            Toast.makeText(getActivity(), "已删除: " + word, Toast.LENGTH_SHORT).show();
         });
 
-        flexboxLayout.addView(wordView);
+        keywordContainer.addView(keywordView);
     }
+
+    private void updateCounter() {
+        counterText.setText(wordList.size() + "/" + maxKeywords);
+    }
+
+
 }

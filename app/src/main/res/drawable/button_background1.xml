@@ -1,0 +1,7 @@
+<!-- 圆角较小的按钮背景 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners android:radius="8dp" />
+    <solid android:color="#FF9800" />
+</shape>
