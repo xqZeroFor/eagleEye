@@ -41,12 +41,6 @@
         </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-
-
-
-
-
-
     <!--<Button
         android:id="@+id/Button_1"
         android:layout_width="match_parent"
@@ -149,7 +143,7 @@
                 android:id="@+id/mySwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
+                android:checked="false"
                 app:trackTint="@drawable/switch_track_selector"
                 app:thumbTint="@drawable/switch_thumb_selector"
                 app:showText="false"
