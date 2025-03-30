@@ -178,7 +178,7 @@ public class BaiduActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "请判断该标题的视频是否与戏剧有关（仅返回YES/NO）：\n" +
+            return "判断下面这个标题是否与明星有关（仅返回YES/NO）：\n" +
                     "标题：" + title + "\n";
         }
     }

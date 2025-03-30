@@ -74,8 +74,9 @@ public class MainAdjustPageFragment extends Fragment {
     private void initSampleData() {
         wordList.clear();
         wordList.add("暴力内容");
-        wordList.add("色情内容");
+        wordList.add("娱乐明星");
         wordList.add("游戏内容");
+        wordList.add("广告");
         refreshKeywordViews();
     }
 

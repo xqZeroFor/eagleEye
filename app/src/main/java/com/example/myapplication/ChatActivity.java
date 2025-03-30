@@ -128,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private String buildPrompt(String content) {
-        return "请尽量简短地对下面的消息做出回复，且不要使用加黑加粗、斜体等字体，如果需要列点，使用“1、”或“-”\n" +
+        return "请尽量简短地对下面的消息做出回复”\n" +
                 "消息" + content;
     }
 
