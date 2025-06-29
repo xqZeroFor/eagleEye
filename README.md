@@ -36,3 +36,62 @@
 ```bash
 git clone https://github.com/your-repo/eagle-eye-filter.git
 # 使用Android Studio打开项目
+
+### 核心配置
+1. 在 `ChatCompletionService.java` 添加API Key：
+```java
+ArkService.builder()
+    .apiKey("your_volc_engine_api_key") // 👈 替换此处
+    .build();
+```
+
+2. 配置网页适配规则（可选）：
+```java
+// BiliActivity.java
+const selector = "div.v-card"; // B站卡片选择器
+
+// BaiduActivity.java
+const selector = "a.rn-large-tpl, a.rn-tpl"; // 百度卡片选择器
+```
+
+## 🧩 核心模块
+| 模块 | 文件 | 功能描述 |
+|------|------|----------|
+| **网页过滤** | `BiliActivity.java`<br>`BaiduActivity.java` | WebView控制层，实现JS注入与DOM操作 |
+| **AI服务** | `ChatCompletionService.java` | 火山引擎API调用与响应处理 |
+| **数据管理** | `FilteredContentDao.java` | SQLite数据库CRUD操作封装 |
+| **历史记录** | `FilterHistoryActivity.java` | 过滤历史展示界面 |
+| **关键词系统** | `KeywordManager.java` | 单例模式管理过滤词库 |
+
+## 🛠️ 二次开发
+### 扩展新平台
+1. 新建Activity继承 `BaseWebActivity`
+2. 实现DOM选择器逻辑：
+```java
+public class WeiboActivity extends BaseWebActivity {
+    @Override
+    protected String getCardSelector() {
+        return "div.card-wrap"; // 微博卡片选择器
+    }
+    
+    @Override
+    protected String getTitleSelector() {
+        return "p.card-text"; // 标题选择器
+    }
+}
+```
+
+### 调整过滤策略
+在 `KeywordManager.java` 修改提示词模板：
+```java
+public String getPromptPrefix() {
+    return "请判断内容是否涉及以下敏感主题：\n关键词：" 
+        + String.join("、", keywords); // ✨ 自定义提示词
+}
+```
+
+## 📜 开源协议
+本项目采用 [MIT License](LICENSE)，欢迎贡献代码！
+```
+
+
