@@ -24,7 +24,7 @@
 ## 📱 功能演示
 | 关键词管理 | B站过滤效果 | 历史追溯 |
 |------------|-------------|----------|
-| <img src="screenshots/keywords.jpg" width=250> | <img src="screenshots/bilibili_filter.jpg" width=250> | <img src="screenshots/history.jpg" width=250> |
+| <img src="screenshots/keywords.png" width=250> | <img src="screenshots/bilibili_filter.png" width=250> | <img src="screenshots/history.png" width=250> |
 
 ## 🚀 快速开始
 ### 环境要求
