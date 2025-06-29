@@ -73,10 +73,7 @@ public class MainAdjustPageFragment extends Fragment {
 
     private void initSampleData() {
         wordList.clear();
-        wordList.add("暴力内容");
-        wordList.add("娱乐明星");
-        wordList.add("游戏内容");
-        wordList.add("广告");
+        wordList.addAll(KeywordManager.getInstance().getKeywords());
         refreshKeywordViews();
     }
 
@@ -107,6 +104,8 @@ public class MainAdjustPageFragment extends Fragment {
         wordList.add(word);
         addKeywordView(word);
         updateCounter();
+        // 更新KeywordManager
+        KeywordManager.getInstance().setKeywords(wordList);
     }
 
     private void refreshKeywordViews() {
@@ -130,6 +129,8 @@ public class MainAdjustPageFragment extends Fragment {
             wordList.remove(word);
             keywordContainer.removeView(keywordView);
             updateCounter();
+            // 更新KeywordManager
+            KeywordManager.getInstance().setKeywords(wordList);
             Toast.makeText(getActivity(), "已删除: " + word, Toast.LENGTH_SHORT).show();
         });
 

@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
@@ -19,15 +20,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
+    private Map<Integer, Fragment> fragmentMap; // 用于缓存Fragment实例
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 初始化Fragment缓存Map
+        fragmentMap = new HashMap<>();
 
         // 设置Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -49,10 +57,12 @@ public class MainActivity extends AppCompatActivity
 
         // 设置默认Fragment
         if (savedInstanceState == null) {
+            Fragment defaultFragment = new MainFrontPageFragment();
+            fragmentMap.put(R.id.nav_front_page, defaultFragment);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MainFrontPageFragment())
+                    .replace(R.id.fragment_container, defaultFragment)
                     .commit();
-            navigationView.setCheckedItem(R.id.nav_account);
+            navigationView.setCheckedItem(R.id.nav_front_page);
         }
     }
 
@@ -61,18 +71,32 @@ public class MainActivity extends AppCompatActivity
         Fragment selectedFragment = null;
         int itemId = item.getItemId();
 
-        // 侧边栏点击逻辑
-        if(itemId == R.id.nav_front_page) {
-            selectedFragment = new MainFrontPageFragment(); //主页
-        } else if (itemId == R.id.nav_account) {
-            selectedFragment = new MainUserPageFragment(); // 编辑账户
-        } else if (itemId == R.id.nav_history) {
-            selectedFragment = new MainFrontPageFragment(); // 之后补充历史记录页面
-        }
-        else if (itemId == R.id.nav_keywords) {
-            selectedFragment = new MainAdjustPageFragment(); // 编辑关键词
-        } else if (itemId == R.id.nav_logout) {
-            selectedFragment = new MainUserPageFragment(); // 之后补充登出页面
+        // 检查是否已经有缓存的Fragment
+        if (fragmentMap.containsKey(itemId)) {
+            selectedFragment = fragmentMap.get(itemId);
+        } else {
+            // 如果没有缓存的Fragment，则创建新的
+            if (itemId == R.id.nav_front_page) {
+                selectedFragment = new MainFrontPageFragment();
+            } else if (itemId == R.id.nav_account) {
+                selectedFragment = new MainUserPageFragment();
+            } else if (itemId == R.id.nav_history) {
+                // 启动过滤历史活动，重用已存在的实例
+                Intent intent = new Intent(this, FilterHistoryActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            } else if (itemId == R.id.nav_keywords) {
+                selectedFragment = new MainAdjustPageFragment();
+            } else if (itemId == R.id.nav_logout) {
+                selectedFragment = new MainUserPageFragment(); // 之后补充登出页面
+            }
+
+            // 将新创建的Fragment添加到缓存中
+            if (selectedFragment != null) {
+                fragmentMap.put(itemId, selectedFragment);
+            }
         }
 
         if (selectedFragment != null) {

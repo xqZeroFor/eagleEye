@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import com.example.myapplication.db.FilteredContentDao;
 
 public class BaiduActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class BaiduActivity extends AppCompatActivity {
     private boolean isFilterEnabled;
     private final Handler responseHandler = new Handler(Looper.getMainLooper());
     private LocalBroadcastManager localBroadcastManager;
+    private FilteredContentDao contentDao;
 
     // 广播接收器用于接收AI响应
     private final BroadcastReceiver apiReceiver = new BroadcastReceiver() {
@@ -51,6 +53,10 @@ public class BaiduActivity extends AppCompatActivity {
 
         // 获取开关状态
         isFilterEnabled = getIntent().getBooleanExtra("switch_state", false);
+
+        // 初始化数据库
+        contentDao = new FilteredContentDao(this);
+        contentDao.open();
 
         // 注册广播接收器
         // 初始化LocalBroadcastManager
@@ -121,6 +127,15 @@ public class BaiduActivity extends AppCompatActivity {
                 myWebView.evaluateJavascript(
                         "hideCard(" + cardIndex + ")", null
                 );
+                // 保存到数据库
+                getCardTitle(cardIndex, title -> {
+                    if (title != null && !title.isEmpty()) {
+                        long result = contentDao.insertFilteredContent(title, "百度", "AI过滤");
+                        Log.d(TAG, "保存到数据库: " + title + ", 结果: " + (result != -1 ? "成功" : "失败"));
+                    } else {
+                        Log.e(TAG, "获取标题失败，无法保存到数据库");
+                    }
+                });
             } else {
                 // 恢复卡片显示
                 myWebView.evaluateJavascript(
@@ -135,6 +150,24 @@ public class BaiduActivity extends AppCompatActivity {
         });
     }
 
+    private interface TitleCallback {
+        void onTitleReceived(String title);
+    }
+
+    private void getCardTitle(int cardIndex, TitleCallback callback) {
+        String jsCode = "var cards = document.querySelectorAll('a.rn-large-tpl, a.rn-tpl2, a.rn-tpl1');" +
+                "if (cards[" + cardIndex + "]) {" +
+                "   cards[" + cardIndex + "].querySelector('div.rn-h2, div.rn-h1').textContent;" +
+                "}";
+        
+        myWebView.evaluateJavascript(jsCode, value -> {
+            // 移除JavaScript返回的引号
+            String title = value != null ? value.replaceAll("^\"|\"$", "") : null;
+            Log.d(TAG, "获取到标题: " + title);
+            callback.onTitleReceived(title);
+        });
+    }
+
     private boolean parseModelResponse(String response) {
         return  response.contains("YES");
     }
@@ -143,6 +176,7 @@ public class BaiduActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         localBroadcastManager.unregisterReceiver(apiReceiver);
+        contentDao.close();
     }
 
     public class JavaScriptInterface {
@@ -178,7 +212,7 @@ public class BaiduActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "判断下面这个标题是否与明星有关（仅返回YES/NO）：\n" +
+            return KeywordManager.getInstance().getPromptPrefix() + "\n" +
                     "标题：" + title + "\n";
         }
     }

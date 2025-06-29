@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import com.example.myapplication.db.FilteredContentDao;
 
 public class BiliActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class BiliActivity extends AppCompatActivity {
     private boolean isFilterEnabled;
     private final Handler responseHandler = new Handler(Looper.getMainLooper());
     private LocalBroadcastManager localBroadcastManager;
+    private FilteredContentDao contentDao;
 
     // 广播接收器用于接收AI响应
     private final BroadcastReceiver apiReceiver = new BroadcastReceiver() {
@@ -51,6 +53,10 @@ public class BiliActivity extends AppCompatActivity {
 
         // 获取开关状态
         isFilterEnabled = getIntent().getBooleanExtra("switch_state", false);
+
+        // 初始化数据库
+        contentDao = new FilteredContentDao(this);
+        contentDao.open();
 
         // 注册广播接收器
         // 初始化LocalBroadcastManager
@@ -121,6 +127,15 @@ public class BiliActivity extends AppCompatActivity {
                 myWebView.evaluateJavascript(
                         "hideCard(" + cardIndex + ")", null
                 );
+                // 保存到数据库
+                getCardTitle(cardIndex, title -> {
+                    if (title != null && !title.isEmpty()) {
+                        long result = contentDao.insertFilteredContent(title, "B站", "AI过滤");
+                        Log.d(TAG, "保存到数据库: " + title + ", 结果: " + (result != -1 ? "成功" : "失败"));
+                    } else {
+                        Log.e(TAG, "获取标题失败，无法保存到数据库");
+                    }
+                });
             } else {
                 // 恢复卡片显示
                 myWebView.evaluateJavascript(
@@ -137,10 +152,28 @@ public class BiliActivity extends AppCompatActivity {
         return  response.contains("YES");
     }
 
+    private interface TitleCallback {
+        void onTitleReceived(String title);
+    }
+
+    private void getCardTitle(int cardIndex, TitleCallback callback) {
+        String jsCode = "var card=document.querySelector('div.v-card:nth-of-type(" +
+                (cardIndex + 1) + ")');" +
+                "if(card){card.querySelector('p.v-card__title').textContent;}";
+        
+        myWebView.evaluateJavascript(jsCode, value -> {
+            // 移除JavaScript返回的引号
+            String title = value != null ? value.replaceAll("^\"|\"$", "") : null;
+            Log.d(TAG, "获取到标题: " + title);
+            callback.onTitleReceived(title);
+        });
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         localBroadcastManager.unregisterReceiver(apiReceiver);
+        contentDao.close();
     }
 
     public class JavaScriptInterface {
@@ -176,7 +209,7 @@ public class BiliActivity extends AppCompatActivity {
         }
 
         private String buildPrompt(String title) {
-            return "请判断该标题的视频是否与游戏相关（仅返回YES/NO）：\n" +
+            return KeywordManager.getInstance().getPromptPrefix() + "\n" +
                     "标题：" + title + "\n";
         }
     }
