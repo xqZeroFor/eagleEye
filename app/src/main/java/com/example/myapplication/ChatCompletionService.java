@@ -40,7 +40,7 @@ public class ChatCompletionService extends Service {
         Log.d(TAG, "Received user input (card_index: " + cardIndex + "): " + userInput);
         // 创建ArkService实例
         ArkService arkService = ArkService.builder()
-                .apiKey("5a8a2a95-135e-4a47-aaf0-1eebd347d708") // 26afd2ac-376b-445d-8a07-bcf12bf1ee39微调api 2f3e7709-ddf3-45ea-90f3-712f14b2f6eb普通模型
+                .apiKey("") // 26afd2ac-376b-445d-8a07-bcf12bf1ee39微调api 2f3e7709-ddf3-45ea-90f3-712f14b2f6eb普通模型
                 .build();
 
         // 初始化消息列表
@@ -66,7 +66,7 @@ public class ChatCompletionService extends Service {
 
         // 创建聊天完成请求
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-                .model("ep-20250217181638-c85jt") // 替换为你的推理接入点ID dmq ep-20250217181638-c85jt  fxq ep-20250217155941-2p855
+                .model("") // 替换为你的推理接入点ID dmq ep-20250217181638-c85jt  fxq ep-20250217155941-2p855
                 .messages(chatMessages) // 设置消息列表
                 .build();
 
